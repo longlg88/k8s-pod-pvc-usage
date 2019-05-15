@@ -11,8 +11,8 @@ if __name__ == "__main__":
     a=0
     result_list=result.split("\n")
     for s in result_list:
-        if "Bound" in s:
-            a=a+1
-            print(a)
-        else:
-            print(a)
+        index_val=s.index("Bound")
+        print(index_val)
+        # if "Bound" in s:
+        #     s.index
+        # else:
