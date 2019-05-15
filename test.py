@@ -7,7 +7,7 @@ if __name__ == "__main__":
     result = subprocess.check_output("kubectl get pv --all-namespaces -o json | jq '.items[].status.phase'", shell=True)
     result=result.replace('"','')
     a=0
-    result_list=result.rstrip()
+    result_list=result.split("\n")
     namespace_list=[]
     for s in result_list:
         ## check if pv is "Bound"
