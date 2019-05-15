@@ -44,8 +44,9 @@ if __name__ == "__main__":
                 
                 ## append list in list
                 for xx in mount_path.split("\n"):
-                    if "secrets" not in xx and xx and "yaml" not in xx:
+                    if "secrets" not in xx and xx and "yaml" not in xx and "ini" not in xx and "toml" not in xx:
                         print(xx)
+                        mount_size_cmd = "kubectl exec -it -n" + val + " " + m_path + " -- /usr/bin/du -c -hs " + xx
                         mount_path_temp_list=xx.rstrip()
                 
                         mount_path_list.append(mount_path_temp_list)
