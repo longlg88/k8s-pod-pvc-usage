@@ -14,5 +14,6 @@ if __name__ == "__main__":
         print(type(s))
         if "Bound" == s:
             a=a+1
-            name = subprocess.check_output("kubectl get pv --all-namespaces -o json | jq '.items[",a,"].spec.claimRef.name")
+            a=str(a)
+            name = subprocess.check_output("kubectl get pv --all-namespaces -o json | jq '.items["+a+"].spec.claimRef.name")
             print(name)
