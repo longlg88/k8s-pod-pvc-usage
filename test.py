@@ -14,6 +14,7 @@ if __name__ == "__main__":
         if "Bound" == s:
             a=a+1
             a=str(a)
+
             ## find name / namespace for pv which is "Bound"
             name_cmd = "kubectl get pv --all-namespaces -o json | jq '.items[" + a + "].spec.claimRef.name'"
             name = subprocess.check_output(name_cmd, shell=True).rstrip()
@@ -38,14 +39,12 @@ if __name__ == "__main__":
         for m_path in mount_pod:
             ## find mountPath in pod
             if m_path != "<none>" and m_path:
-                # if m_path:
-                #mount_pod_list.append(mount_pod)
                 mount_path_cmd = "kubectl get pod -n " + val + " " + m_path + " -o json | jq '.spec.containers[0].volumeMounts[].mountPath'"
                 mount_path=subprocess.check_output(mount_path_cmd, shell=True)
+
                 ## append list in list
                 mount_path_temp_list=mount_path.rstrip().split("\n")
-                # mount_path=mount_path.replace("\n","")
-                # mount_path_list.append(mount_path)
+                mount_path_temp_list=mount_path.replace('"','')
                 mount_path_list.append(mount_path_temp_list)
             else:
                 continue
