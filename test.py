@@ -21,12 +21,10 @@ if __name__ == "__main__":
             namespace = subprocess.check_output(namespace_cmd, shell=True)#.replace('\n','')
             a=int(a)
             # print(name + " " + namespace)
+        namespace_list=namespace.split("\n")
+
     ## remove duplicate values
-    print(namespace)
-    namespace_list=namespace.split("\n")
-    print(namespace_list)
     namespace_list = list(set(namespace_list))
-    print(namespace_list)
     for val in namespace_list:
         ## find pod mounted
         print("val = "+val)
