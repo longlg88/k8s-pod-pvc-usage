@@ -47,9 +47,10 @@ if __name__ == "__main__":
                     if "secrets" not in xx and xx and "yaml" not in xx and "ini" not in xx and "toml" not in xx:
                         print(xx)
                         mount_size_cmd = "kubectl exec -it -n" + val + " " + m_path + " -- /usr/bin/du -c -hs " + xx
-                        mount_path_temp_list=xx.rstrip()
-                
-                        mount_path_list.append(mount_path_temp_list)
+                        mount_size = subprocess.check_output(mount_size_cmd, shell=True)
+                        print(mount_size)
+                        # mount_path_temp_list=xx.rstrip()
+                        # mount_path_list.append(mount_path_temp_list)
 
             else:
                 continue
