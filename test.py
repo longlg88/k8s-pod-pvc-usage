@@ -23,6 +23,7 @@ if __name__ == "__main__":
             # print(name + " " + namespace)
     ## remove duplicate values
     namespace_list=namespace.split("\n")
+    print(namespace_list)
     namespace_list = list(set(namespace_list))
     print(namespace_list)
     for val in namespace_list:
