@@ -9,7 +9,7 @@ if __name__ == "__main__":
     result=result.replace('"','')
     print(result.split("\n"))
     a=0
-    if "Bound" in result:
+    if "Bound" in result.split("\n"):
         a=a+1
         print(a)
     else:
