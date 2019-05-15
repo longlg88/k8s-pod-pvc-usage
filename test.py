@@ -7,7 +7,6 @@ if __name__ == "__main__":
     result = subprocess.check_output("kubectl get pv --all-namespaces -o json | jq '.items[].status.phase'", shell=True)
     print("here : "+result)
     result=result.replace('"','')
-    print(result.split("\n"))
     a=0
     result_list=result.split("\n")
     for s in result_list:
@@ -24,7 +23,7 @@ if __name__ == "__main__":
             # print(name + " " + namespace)
     ## remove duplicate values
     namespace_list=namespace.split("\n")
-    namespace_list = list(set(namespace))
+    namespace_list = list(set(namespace_list))
 
     for val in namespace_list:
         ## 
