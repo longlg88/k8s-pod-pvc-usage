@@ -22,8 +22,8 @@ if __name__ == "__main__":
             namespace = subprocess.check_output(namespace_cmd, shell=True)#.replace('\n','')
             a=int(a)
             # print(name + " " + namespace)
-            print(str(namespace))
-            namespace_list.append(namespace.split("\n"))
+            namespace=''.join(namespace.split("\n"))
+            namespace_list.append(namespace)
     print(namespace_list)
     ## remove duplicate values
     namespace_list = list(set(namespace_list))
