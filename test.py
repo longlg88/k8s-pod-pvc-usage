@@ -9,8 +9,10 @@ if __name__ == "__main__":
     result=result.replace('"','')
     print(result.split("\n"))
     a=0
-    if "Bound" in result.split("\n"):
-        a=a+1
-        print(a)
-    else:
-        print(a)
+    result_list=result.split("\n")
+    for s in result_list:
+        if "Bound" in s:
+            a=a+1
+            print(a)
+        else:
+            print(a)
