@@ -9,6 +9,7 @@ if __name__ == "__main__":
     result=result.replace('"','')
     a=0
     result_list=result.split("\n")
+    namespace_list=[]
     for s in result_list:
         # check if pv is "Bound"
         if "Bound" == s:
@@ -22,7 +23,7 @@ if __name__ == "__main__":
             a=int(a)
             # print(name + " " + namespace)
             print(str(namespace))
-            namespace_list=namespace.split("\n")
+            namespace_list.append(namespace.split("\n"))
     print(namespace_list)
     ## remove duplicate values
     namespace_list = list(set(namespace_list))
