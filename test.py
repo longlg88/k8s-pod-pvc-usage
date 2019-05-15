@@ -6,4 +6,4 @@ import subprocess
 if __name__ == "__main__":
     result = subprocess.check_output("kubectl get pv --all-namespaces -o json | jq '.items[].status.phase'", shell=True)
     print("here : "+result)
-    print(type(result))
+    print(result.split("\n"))
