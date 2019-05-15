@@ -16,12 +16,12 @@ if __name__ == "__main__":
             a=str(a)
             ## find name / namespace for pv which is "Bound"
             name_cmd = "kubectl get pv --all-namespaces -o json | jq '.items[" + a + "].spec.claimRef.name'"
-            name = subprocess.check_output(name_cmd, shell=True).replace('\n','')
+            # name = subprocess.check_output(name_cmd, shell=True).replace('\n','')
+            name = subprocess.check_output(name_cmd, shell=True).rstrip()
             namespace_cmd = "kubectl get pv --all-namespaces -o json | jq '.items[" + a + "].spec.claimRef.namespace'"
-            namespace = subprocess.check_output(namespace_cmd, shell=True)#.replace('\n','')
+            namespace = subprocess.check_output(namespace_cmd, shell=True)
             a=int(a)
             # print(name + " " + namespace)
-            # namespace=''.join(namespace.split("\n"))
             namespace=''.join(namespace.rstrip())
             namespace_list.append(namespace)
 
