@@ -43,8 +43,9 @@ if __name__ == "__main__":
                 mount_path=subprocess.check_output(mount_path_cmd, shell=True)
 
                 ## append list in list
-                mount_path_temp_list=mount_path.rstrip().split("\n")
                 mount_path_temp_list=mount_path.replace('"','')
+                mount_path_temp_list=mount_path.rstrip().split("\n")
+                
                 mount_path_list.append(mount_path_temp_list)
             else:
                 continue
