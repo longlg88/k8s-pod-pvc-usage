@@ -17,7 +17,7 @@ if __name__ == "__main__":
             name_cmd = "kubectl get pv --all-namespaces -o json | jq '.items[" + a + "].spec.claimRef.name'"
             name = subprocess.check_output(name_cmd, shell=True).replace('\n','')
             namespace_cmd = "kubectl get pv --all-namespaces -o json | jq '.items[" + a + "].spec.claimRef.namespace'"
-            namespace = subprocess.check_output(namespace_cmd, shell=True)#.replace('\n','')
+            namespace = subprocess.check_output(namespace_cmd, shell=True).replace('\n','')
 
             mount_pod_cmd = "kubectl describe pvc -n "+namespace+" | grep Mounted | awk '{print $3}'"
             mount_pod = subprocess.check_output(mount_pod_cmd, shell=True)
