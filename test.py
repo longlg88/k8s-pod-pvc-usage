@@ -22,10 +22,9 @@ if __name__ == "__main__":
             a=int(a)
             # print(name + " " + namespace)
     ## remove duplicate values
-    print("here")
     namespace_list=namespace.split("\n")
     namespace_list = list(set(namespace_list))
-    print("here2")
+    print(namespace_list)
     for val in namespace_list:
         ## find pod mounted
         print("val = "+val)
