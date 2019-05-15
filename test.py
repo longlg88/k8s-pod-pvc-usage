@@ -26,7 +26,8 @@ if __name__ == "__main__":
     namespace_list = list(set(namespace_list))
 
     for val in namespace_list:
-        ## 
+        ## find pod mounted
+        print(val)
         mount_pod_cmd = "kubectl describe pvc -n " + val + " | grep Mounted | awk '{print $3}'"
         mount_pod = subprocess.check_output(mount_pod_cmd, shell=True)
         print(mount_pod)
