@@ -44,8 +44,8 @@ if __name__ == "__main__":
                 
                 ## append list in list
                 for xx in mount_path.split("\n"):
-                    if "secrets" in xx:
-                        mount_path_temp_list=mount_path.rstrip().split("\n")
+                    if "secrets" not in xx:
+                        mount_path_temp_list=xx.rstrip()
                 
                         mount_path_list.append(mount_path_temp_list)
 
