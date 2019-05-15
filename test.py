@@ -17,5 +17,5 @@ if __name__ == "__main__":
             a=str(a)
             cmd = "kubectl get pv --all-namespaces -o json | jq '.items[" + a + "].spec.claimRef.name'"
             print(cmd)
-            name = subprocess.check_output(cmd)
+            name = subprocess.check_output(cmd, shell=True)
             print(name)
