@@ -35,17 +35,18 @@ if __name__ == "__main__":
         mount_pod = subprocess.check_output(mount_pod_cmd, shell=True)
         # print(mount_pod)
         mount_pod=mount_pod.split("\n")
-        print(mount_pod)
+
         for m_path in mount_pod:
             ## find mountPath in pod
-            if m_path != "<none>":
-                if m_path:
-                    #mount_pod_list.append(mount_pod)
-                    mount_path_cmd = "kubectl get pod -n " + val + " " + m_path + " -o json | jq '.spec.containers[0].volumeMounts[].mountPath'"
-                    mount_path=subprocess.check_output(mount_path_cmd, shell=True)
-                    ## append list in list
-                    print("path = " + mount_path)
-                    mount_path_list.append(mount_path)
+            if m_path != "<none>" and m_path:
+                # if m_path:
+                #mount_pod_list.append(mount_pod)
+                mount_path_cmd = "kubectl get pod -n " + val + " " + m_path + " -o json | jq '.spec.containers[0].volumeMounts[].mountPath'"
+                mount_path=subprocess.check_output(mount_path_cmd, shell=True)
+                ## append list in list
+                mount_path=mount_path.replace("\n","")
+                print("path = " + mount_path)
+                mount_path_list.append(mount_path)
             else:
                 continue
 
