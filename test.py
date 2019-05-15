@@ -41,12 +41,14 @@ if __name__ == "__main__":
             if m_path != "<none>" and m_path:
                 mount_path_cmd = "kubectl get pod -n " + val + " " + m_path + " -o json | jq '.spec.containers[0].volumeMounts[].mountPath'"
                 mount_path=subprocess.check_output(mount_path_cmd, shell=True)
-
+                print(type(mount_path))
                 ## append list in list
-                mount_path_temp_list=mount_path.replace('"','')
-                mount_path_temp_list=mount_path.rstrip().split("\n")
+                for xx in mount_path:
+                    if "secrets" in xx:
+                        mount_path_temp_list=mount_path.rstrip().split("\n")
                 
-                mount_path_list.append(mount_path_temp_list)
+                        mount_path_list.append(mount_path_temp_list)
+
             else:
                 continue
 
