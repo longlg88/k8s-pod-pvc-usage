@@ -35,13 +35,14 @@ if __name__ == "__main__":
         mount_pod_cmd = "kubectl describe pvc -n " + val + " | grep Mounted | awk '{print $3}'"
         mount_pod = subprocess.check_output(mount_pod_cmd, shell=True)
         # print(mount_pod)
-        mount_pod=''.join(mount_pod.split("\n"))
-        ## find mountPath in pod
-        if mount_pod != "<none>":
-            #mount_pod_list.append(mount_pod)
-            mount_path_cmd = "kubectl get pod -n " + val + " " + mount_pod + " -o json | jq '.spec.containers[0].volumeMounts[].mountPath'"
-            mount_path=subprocess.check_output(mount_path_cmd, shell=True)
-            ## append list in list
-            mount_path_list.append(mount_path)
+        mount_pod=mount_pod.split("\n")
+        for m in mount_pod:
+            ## find mountPath in pod
+            if m != "<none>":
+                #mount_pod_list.append(mount_pod)
+                mount_path_cmd = "kubectl get pod -n " + val + " " + m + " -o json | jq '.spec.containers[0].volumeMounts[].mountPath'"
+                mount_path=subprocess.check_output(mount_path_cmd, shell=True)
+                ## append list in list
+                mount_path_list.append(mount_path)
 
     print(mount_path_list)
