@@ -11,7 +11,7 @@ if __name__ == "__main__":
     result_list=result.split("\n")
     namespace_list=[]
     for s in result_list:
-        # check if pv is "Bound"
+        ## check if pv is "Bound"
         if "Bound" == s:
             a=a+1
             a=str(a)
@@ -24,12 +24,24 @@ if __name__ == "__main__":
             # print(name + " " + namespace)
             namespace=''.join(namespace.split("\n"))
             namespace_list.append(namespace)
-    print(namespace_list)
+
     ## remove duplicate values
+    mount_pod_list=[]
+    mount_path_list=[]
     namespace_list = list(set(namespace_list))
     for val in namespace_list:
         ## find pod mounted
         print("val = "+val)
         mount_pod_cmd = "kubectl describe pvc -n " + val + " | grep Mounted | awk '{print $3}'"
         mount_pod = subprocess.check_output(mount_pod_cmd, shell=True)
-        print(mount_pod)
+        # print(mount_pod)
+        mount_pod=''.join(mount_pod.split("\n"))
+        ## find mountPath in pod
+        if mount_pod != "<none>":
+            #mount_pod_list.append(mount_pod)
+            mount_path_cmd = "kubectl get pod -n " + val + " " + mount_pod + " -o json | jq '.spec.containers[0].volumeMounts[].mountPath'"
+            mount_path=subprocess.check_output(mount_path_cmd, shell=True)
+            ## append list in list
+            mount_path_list.append(mount_path)
+
+    print(mount_path_list)
