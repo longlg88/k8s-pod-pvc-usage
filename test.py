@@ -45,6 +45,7 @@ if __name__ == "__main__":
                 ## append list in list
                 for xx in mount_path.split("\n"):
                     if "secrets" not in xx and xx and "yaml" not in xx:
+                        print(xx)
                         mount_path_temp_list=xx.rstrip()
                 
                         mount_path_list.append(mount_path_temp_list)
@@ -52,4 +53,4 @@ if __name__ == "__main__":
             else:
                 continue
 
-    print(mount_path_list)
+    # print(mount_path_list)
