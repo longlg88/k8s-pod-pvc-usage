@@ -48,7 +48,7 @@ if __name__ == "__main__":
                         print(xx+"*")
                         mount_size_cmd = "kubectl exec -it -n " + val + " " + m_path + " -- du -c -hs " + xx.replace('"','')
                         mount_size = subprocess.check_output(mount_size_cmd, shell=True)
-                        print(m_path)
+                        print(mount_size_cmd)
                         print(mount_size)
                         # mount_path_temp_list=xx.rstrip()
                         # mount_path_list.append(mount_path_temp_list)
