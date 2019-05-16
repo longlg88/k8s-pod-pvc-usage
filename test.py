@@ -41,7 +41,7 @@ if __name__ == "__main__":
             if m_path != "<none>" and m_path:
                 mount_path_cmd = "kubectl get pod -n " + val + " " + m_path + " -o json | jq '.spec.containers[0].volumeMounts[].mountPath'"
                 mount_path=subprocess.check_output(mount_path_cmd, shell=True)
-                print(mount_path "\n")
+                print(mount_path+"\n")
                 print("================================================")
                 ## append list in list
                 for xx in mount_path.split("\n"):
