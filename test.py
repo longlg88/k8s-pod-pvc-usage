@@ -42,7 +42,7 @@ if __name__ == "__main__":
                 mount_path_cmd = "kubectl get pod -n " + val + " " + m_path + " -o json | jq '.spec.containers[0].volumeMounts[].mountPath'"
                 mount_path=subprocess.check_output(mount_path_cmd, shell=True)
                 print(mount_path+"\n")
-                print("================================================")
+                
                 ## append list in list
                 for xx in mount_path.split("\n"):
                     if "secrets" not in xx and xx and "yaml" not in xx and "ini" not in xx and "toml" not in xx and "config" not in xx:
@@ -53,7 +53,7 @@ if __name__ == "__main__":
                         print(mount_size)
                         # mount_path_temp_list=xx.rstrip()
                         # mount_path_list.append(mount_path_temp_list)
-
+                        print("================================================")
             else:
                 continue
 
