@@ -29,7 +29,7 @@ if __name__ == "__main__":
     get_efs_provisioner_name = subprocess.check_output("kubectl get pod -n kube-system | grep efs | awk '{print $1}'", shell=True)
 
     for val in range(len(get_namespaces)):
-        mount_size_cmd = "kubectl exec -it -n kube-system " + get_efs_provisioner_name + " -- du -c -hs /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val]
+        mount_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -c -hs /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val]
         mount_size = subprocess.check_output(mount_size_cmd, shell=True)
         print(mount_size)
 
