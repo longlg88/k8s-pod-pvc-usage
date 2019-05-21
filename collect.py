@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     get_namespaces = []
     get_namespace = subprocess.check_output("kubectl get pvc --all-namespaces | awk '{print $1}'", shell=True)
-    get_namespaces = get_namespace.split('\n').replace('\n','')
+    get_namespaces = get_namespace.replace('\n','').split('\n')
     # get_namespaces.replace('\n','')
     print(get_namespaces)
     '''
