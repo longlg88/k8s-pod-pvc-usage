@@ -29,13 +29,14 @@ if __name__ == "__main__":
     get_efs_provisioner_name = subprocess.check_output("kubectl get pod -n kube-system | grep efs | awk '{print $1}'", shell=True)
     get_efs_provisioner_name = get_efs_provisioner_name.replace('\n','')
     
+    mount_size=[]
     for val in range(len(get_namespaces)):
         find_dir_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- find /persistentvolumes -name " + "'*" + get_pvc_names[val] + "-" + get_pvc_ids[val] + "*'"
         find_dir = subprocess.check_output(find_dir_cmd, shell=True)
-        print("dir = "+find_dir)
+
         if find_dir:
-            mount_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -c -hs /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val]
-            mount_size = subprocess.check_output(mount_size_cmd, shell=True)
+            mount_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -c -hs /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $1}'"
+            mount_size.append(subprocess.check_output(mount_size_cmd, shell=True))
             print(mount_size)
 
 
