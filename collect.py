@@ -28,14 +28,18 @@ if __name__ == "__main__":
 
     get_efs_provisioner_name = subprocess.check_output("kubectl get pod -n kube-system | grep efs | awk '{print $1}'", shell=True)
     get_efs_provisioner_name = get_efs_provisioner_name.replace('\n','')
+    
     for val in range(len(get_namespaces)):
-        mount_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -c -hs /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val]
-        mount_size = subprocess.check_output(mount_size_cmd, shell=True)
-        print(mount_size)
+        find_dir = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- find /persistentvolumes -name " + "'*" + get_pvc_names[val] + "*'"
+        if find_dir:
+            mount_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -c -hs /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val]
+            mount_size = subprocess.check_output(mount_size_cmd, shell=True)
+            print(mount_size)
 
 
 
     '''
+    [ec2-user@seoul-dev-okc1-bastion ~]$ k get pvc --all-namespaces
     NAMESPACE   NAME                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
     default     sample-efs                             Bound    pvc-8ed49a62-7ab8-11e9-a710-021602437252   1Gi        RWX            efs            5h33m
     devops      chartmuseum                            Bound    pvc-2ce33d40-54fc-11e9-bb58-0a3c8e8c39c4   8Gi        RWO            efs            48d
