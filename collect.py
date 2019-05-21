@@ -12,7 +12,8 @@ if __name__ == "__main__":
     get_namespace = subprocess.check_output("kubectl get pvc --all-namespaces | awk '{print $1}'", shell=True)
     get_namespaces = get_namespace.split()
     list(set(get_namespaces))
-    print(get_namespaces.pop(0))
+    get_namespaces.pop(0)
+    print(get_namespaces)
     '''
     NAMESPACE   NAME                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
     default     sample-efs                             Bound    pvc-8ed49a62-7ab8-11e9-a710-021602437252   1Gi        RWX            efs            5h33m
