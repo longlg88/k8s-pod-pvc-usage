@@ -43,7 +43,7 @@ if __name__ == "__main__":
             #print(mount_size)
 
             ## pod name
-            pod_name_cmd = "kubectl describe pvc -n " + get_namespaces[val] + get_pvc_names[val] + " | grep Mounted | awk '{print $3}'"
+            pod_name_cmd = "kubectl describe pvc -n " + get_namespaces[val] + " " + get_pvc_names[val] + " | grep Mounted | awk '{print $3}'"
             pod_name = subprocess.check_output(pod_name_cmd, shell=True)
             print(pod_name_cmd)
             print(pod_name)
