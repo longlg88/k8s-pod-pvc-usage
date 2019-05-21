@@ -51,15 +51,7 @@ if __name__ == "__main__":
                 ## namespace / pod name / size
                 print(get_namespaces[val] + " " + pod_name + " " + m_size)
 
-        
     
-
-    '''
-    none 이 존재함... 이를 어떻게 해결할지
-    '''
-
-
-
     '''
     [ec2-user@seoul-dev-okc1-bastion ~]$ k get pvc --all-namespaces
     NAMESPACE   NAME                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
