@@ -11,8 +11,9 @@ if __name__ == "__main__":
     get_namespaces = []
     get_namespace = subprocess.check_output("kubectl get pvc --all-namespaces | awk '{print $1}'", shell=True)
     get_namespaces = get_namespace.split()
-    list(set(get_namespaces))
+    
     get_namespaces.pop(0)
+    get_namespaces = list(set(get_namespaces))
     print(get_namespaces)
     '''
     NAMESPACE   NAME                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
