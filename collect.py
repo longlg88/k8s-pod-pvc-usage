@@ -46,7 +46,7 @@ if __name__ == "__main__":
             pod_name_cmd = "kubectl describe pvc -n " + get_namespaces[val] + " " + get_pvc_names[val] + " | grep Mounted | awk '{print $3}'"
             pod_name = subprocess.check_output(pod_name_cmd, shell=True)
             #print(pod_name_cmd)
-            print('pod name : ' + pod_name.replace('\n',''))
+            #print('pod name : ' + pod_name.replace('\n',''))
             if 'none' not in pod_name.replace('\n',''):
                 ## namespace / pod name / size
                 print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + m_size)
