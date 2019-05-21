@@ -47,8 +47,9 @@ if __name__ == "__main__":
             pod_name = subprocess.check_output(pod_name_cmd, shell=True)
             print(pod_name_cmd)
             print(pod_name)
-            ## namespace / pod name / size
-            print(get_namespaces[val] + " " + pod_name + " " + m_size)
+            if pod_name != "<none>":
+                ## namespace / pod name / size
+                print(get_namespaces[val] + " " + pod_name + " " + m_size)
 
         
     
