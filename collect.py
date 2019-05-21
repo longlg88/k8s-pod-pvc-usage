@@ -35,19 +35,22 @@ if __name__ == "__main__":
         find_dir = subprocess.check_output(find_dir_cmd, shell=True)
 
         if find_dir:
-            ## size 
-            mount_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -c -hs /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $1}'"
-            m_size = subprocess.check_output(mount_size_cmd, shell=True)
-            m_size = m_size.split().pop(0)
-            #mount_size.append(m_size)
-            #print(mount_size)
-
             ## pod name
             pod_name_cmd = "kubectl describe pvc -n " + get_namespaces[val] + " " + get_pvc_names[val] + " | grep Mounted | awk '{print $3}'"
             pod_name = subprocess.check_output(pod_name_cmd, shell=True)
-            #print(pod_name_cmd)
-            #print('pod name : ' + pod_name.replace('\n',''))
+            
             if 'none' not in pod_name.replace('\n',''):
+                ## size 
+                mount_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -c -hs /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $1}'"
+                m_size = subprocess.check_output(mount_size_cmd, shell=True)
+                m_size = m_size.split().pop(0)
+                #mount_size.append(m_size)
+                #print(mount_size)
+
+                
+                #print(pod_name_cmd)
+                #print('pod name : ' + pod_name.replace('\n',''))
+            
                 ## namespace / pod name / size
                 print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + m_size)
 
