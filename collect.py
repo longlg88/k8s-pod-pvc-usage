@@ -50,6 +50,13 @@ if __name__ == "__main__":
             ## namespace / pod name / size
             print(get_namespaces[val] + " " + pod_name + " " + m_size)
 
+        
+    
+
+    '''
+    none 이 존재함... 이를 어떻게 해결할지
+    '''
+
 
 
     '''
