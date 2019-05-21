@@ -31,6 +31,7 @@ if __name__ == "__main__":
     
     for val in range(len(get_namespaces)):
         find_dir = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- find /persistentvolumes -name " + "'*" + get_pvc_names[val] + "*'"
+        print("dir = "+find_dir)
         if find_dir:
             mount_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -c -hs /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val]
             mount_size = subprocess.check_output(mount_size_cmd, shell=True)
