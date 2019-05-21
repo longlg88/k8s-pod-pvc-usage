@@ -8,9 +8,11 @@ if __name__ == "__main__":
     ##### It failed because prometheus server can't use '/bin/bash' or '/bin/sh', so it du / df command didn't work.
     # result = subprocess.check_output("kubectl get pv --all-namespaces -o json | jq '.items[].status.phase'", shell=True)
 
-    #get_namespace = []
+    get_namespaces = []
     get_namespace = subprocess.check_output("kubectl get pvc --all-namespaces | awk '{print $1}'", shell=True)
-    print(type(get_namespace))
+    get_namespaces = get_namespace.split('\n')
+    # get_namespaces.replace('\n','')
+    print(get_namespaces.replace('\n',''))
     '''
     NAMESPACE   NAME                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
     default     sample-efs                             Bound    pvc-8ed49a62-7ab8-11e9-a710-021602437252   1Gi        RWX            efs            5h33m
