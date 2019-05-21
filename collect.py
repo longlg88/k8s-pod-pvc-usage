@@ -6,15 +6,33 @@ import subprocess
 if __name__ == "__main__":
     ##### Count filesystem size for du / df 
     ##### It failed because prometheus server can't use '/bin/bash' or '/bin/sh', so it du / df command didn't work.
-    # result = subprocess.check_output("kubectl get pv --all-namespaces -o json | jq '.items[].status.phase'", shell=True)
+    
 
     get_namespaces = []
     get_namespace = subprocess.check_output("kubectl get pvc --all-namespaces | awk '{print $1}'", shell=True)
+    get_pvc_name = subprocess.check_output("kubectl get pvc --all-namespaces | awk '{print $2}'", shell=True)
+    get_pvc_id = subprocess.check_output("kubectl get pvc --all-namespaces | awk '{print $4}'", shell=True)
+
+
     get_namespaces = get_namespace.split()
-    
+    get_pvc_names = get_pvc_name.split()
+    get_pvc_ids = get_pvc_id.split()
+
+
+
     get_namespaces.pop(0)
-    get_namespaces = list(set(get_namespaces))
+    get_pvc_names.pop(0)
+    get_pvc_ids.pop(0)
+    
     print(get_namespaces)
+
+    for val in range(len(get_namespaces)):
+        mount_size_cmd = "kubectl exec -it -n " + get_namespaces[val] + " " + get_pvc_names[val] + "-" + get_pvc_ids[val] + " -- du -c -hs " + xx.replace('"','')
+        mount_size = subprocess.check_output(mount_size_cmd, shell=True)
+        print(mount_size)
+
+
+
     '''
     NAMESPACE   NAME                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
     default     sample-efs                             Bound    pvc-8ed49a62-7ab8-11e9-a710-021602437252   1Gi        RWX            efs            5h33m
@@ -172,6 +190,9 @@ if __name__ == "__main__":
     Mounted By:    grafana-9474c8f77-hb8cq
     '''
 
+
+
+    # result = subprocess.check_output("kubectl get pv --all-namespaces -o json | jq '.items[].status.phase'", shell=True)
     # result=result.replace('"','')
     # a=0
     # result_list=result.split("\n")
