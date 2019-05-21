@@ -27,7 +27,7 @@ if __name__ == "__main__":
     print(get_namespaces)
 
     for val in range(len(get_namespaces)):
-        mount_size_cmd = "kubectl exec -it -n " + get_namespaces[val] + " " + get_pvc_names[val] + "-" + get_pvc_ids[val] + " -- du -c -hs " + xx.replace('"','')
+        mount_size_cmd = "kubectl exec -it -n " + get_namespaces[val] + " " + get_pvc_names[val] + "-" + get_pvc_ids[val] + " -- du -c -hs " #+ xx.replace('"','')
         mount_size = subprocess.check_output(mount_size_cmd, shell=True)
         print(mount_size)
 
