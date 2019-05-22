@@ -2,12 +2,13 @@
 import os
 import sys
 import subprocess
+import timeit
 
 if __name__ == "__main__":
     ##### Count filesystem size for du / df 
     ##### It failed because prometheus server can't use '/bin/bash' or '/bin/sh', so it du / df command didn't work.
     
-
+    start = timeit.default_timer()
     get_namespaces = []
     get_namespace = subprocess.check_output("kubectl get pvc --all-namespaces | awk '{print $1}'", shell=True)
     get_pvc_name = subprocess.check_output("kubectl get pvc --all-namespaces | awk '{print $2}'", shell=True)
@@ -59,7 +60,8 @@ if __name__ == "__main__":
             
                 ## namespace / pod name / size
                 print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + m_size)
-
+    stop = timeit.default_timer()
+    print(stop - start)
     
     '''
     [ec2-user@seoul-dev-okc1-bastion ~]$ k get pvc --all-namespaces
