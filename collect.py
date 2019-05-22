@@ -68,9 +68,9 @@ if __name__ == "__main__":
                         m_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -ks /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + "/" + _file + " | awk '{print $1}'"
                         m_size = subprocess.check_output(m_size_cmd, shell=True)
                         m_size=m_size.split()
-                        print(m_size)
-                        mount_size.append(m_size)
-                    mount_size = list(map(int, m_size))
+                        print(''.join(m_size))
+                        mount_size.append(''.join(m_size))
+                    mount_size = list(map(int, mount_size))
                     print(mount_size)
                     sum_size = sum(mount_size)
                     print(sum_size)
