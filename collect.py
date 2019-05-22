@@ -74,12 +74,12 @@ if __name__ == "__main__":
                     print(mount_size)
                     sum_size = sum(mount_size)
                     print(sum_size)
-                
+                    print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size))
                 #print(pod_name_cmd)
                 #print('pod name : ' + pod_name.replace('\n',''))
             
                 ## namespace / pod name / size
-                print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size))
+                
     stop = timeit.default_timer()
     print(stop - start)
     
