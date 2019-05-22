@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
                 file_list_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- ls -al /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $9}'"
                 file_list = subprocess.check_output(file_list_cmd, shell=True)
-                file_list = file_list.split().pop(0)
+                file_list = file_list.split()
                 print(file_list)
                 file_list = file_list.pop(0)
                 for _file in file_list:
