@@ -71,6 +71,7 @@ if __name__ == "__main__":
                         print(m_size)
                         mount_size.append(m_size)
                     mount_size = list(map(int, m_size))
+                    print(mount_size)
                     sum_size = sum(mount_size)
                     print(sum_size)
                 
