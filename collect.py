@@ -77,10 +77,8 @@ if __name__ == "__main__":
                 find_file_list_cmd = "kubectl exec -it " +get_efs_provisioner_name + " -n kube-system -- ls -al /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $9}' | sed -r \"s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g\""
                 find_file_list = subprocess.check_output(find_file_list_cmd, shell=True)
                 find_file_list = find_file_list.split()
-                if '.' in find_file_list:
-                    
-                    find_file_list.remove('.')
-                    find_file_list.remove('..')
+                find_file_list.remove('.')
+                find_file_list.remove('..')
                 # print(find_file_list)
 
                 if len(find_file_list) != 0:
