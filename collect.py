@@ -32,7 +32,10 @@ if __name__ == "__main__":
     mount_size=[]
     for val in range(len(get_namespaces)):
         find_dir_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- ls -al /persistentvolumes | awk '{print $9}' | grep " + get_pvc_names[val] + "-" + get_pvc_ids[val]
-        find_dir = subprocess.check_output(find_dir_cmd, stderr=subprocess.STDOUT, shell=True)
+        find_dir = subprocess.check_output(find_dir_cmd, shell=True)
+
+        if not find_dir:
+            print('here')
 
         if find_dir:
             ## pod name
