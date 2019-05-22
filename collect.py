@@ -59,6 +59,7 @@ if __name__ == "__main__":
                 find_file_list_cmd = "kubectl exec -it " +get_efs_provisioner_name + " -n kube-system -- ls -al /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $9}'"
                 find_file_list = subprocess.check_output(find_file_list_cmd, shell=True)
                 find_file_list = find_file_list.split()
+                print(find_file_list)
 
                 # m_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -m /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $1}'"
                 # m_size = subprocess.check_output(m_size_cmd, shell=True)
