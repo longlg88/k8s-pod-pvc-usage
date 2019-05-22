@@ -61,7 +61,7 @@ if __name__ == "__main__":
                 find_file_list = find_file_list.split()
                 find_file_list.remove('.')
                 find_file_list.remove('..')
-                #print(find_file_list)
+                print(find_file_list)
 
                 if len(find_file_list) != 0:
                     for _file in find_file_list:
