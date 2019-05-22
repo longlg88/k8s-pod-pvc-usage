@@ -61,15 +61,16 @@ if __name__ == "__main__":
                 find_file_list = find_file_list.split()
                 find_file_list.remove('.')
                 find_file_list.remove('..')
-                print(find_file_list)
+                #print(find_file_list)
 
-                # m_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -m /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $1}'"
-                # m_size = subprocess.check_output(m_size_cmd, shell=True)
-                # print(m_size)
-                # m_size=m_size.split()
-                # print(m_size)
-                # mount_size = list(map(int, m_size))
-                # sum_size = sum(mount_size)
+                if len(find_file_list) != 0:
+                    for _file in find_file_list:
+                        m_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -ks /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + "/" + _file
+                        m_size = subprocess.check_output(m_size_cmd, shell=True)
+                        m_size=m_size.split()
+                        print(m_size)
+                        mount_size = list(map(int, m_size))
+                        sum_size = sum(mount_size)
                 
                 #print(pod_name_cmd)
                 #print('pod name : ' + pod_name.replace('\n',''))
