@@ -30,7 +30,7 @@ if __name__ == "__main__":
     get_efs_provisioner_name = subprocess.check_output("kubectl get pod -n kube-system | grep efs | awk '{print $1}'", shell=True)
     get_efs_provisioner_name = get_efs_provisioner_name.replace('\n','')
     
-    mount_size=[]
+    
     for val in range(len(get_namespaces)):
         find_dir_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- ls -al /persistentvolumes | awk '{print $9}' | grep " + get_pvc_names[val] + "-" + get_pvc_ids[val]
         try:
@@ -65,17 +65,22 @@ if __name__ == "__main__":
 
                 if len(find_file_list) != 0:
                     for _file in find_file_list:
+                        mount_size=[]
                         m_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -ks /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + "/" + _file + " | awk '{print $1}'"
                         m_size = subprocess.check_output(m_size_cmd, shell=True)
                         m_size=m_size.split()
                         print(''.join(m_size))
                         mount_size.append(''.join(m_size))
-                    mount_size = list(map(int, mount_size))
-                    print(mount_size)
-                    sum_size = sum(mount_size)
-                    sum_size=round(sum_size/1024)
-                    print(sum_size)
-                    print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size))
+                        mount_size = list(map(int, mount_size))
+                        sum_size = sum(mount_size)
+                        if sum_size < 1024:
+                            print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size)+ "Kb")
+                        else if sum_size < ‭1,048,576‬ :
+                            sum_size=round(sum_size/1024)
+                            print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size)+ "Mb")
+                        else:
+                            sum_size=round(sum_size/1024/1024)
+                            print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size))
                 #print(pod_name_cmd)
                 #print('pod name : ' + pod_name.replace('\n',''))
             
