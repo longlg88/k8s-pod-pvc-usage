@@ -75,7 +75,7 @@ if __name__ == "__main__":
                         sum_size = sum(mount_size)
                         if sum_size < 1024:
                             print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size)+ "Kb")
-                        else if sum_size < ‭1048576‬ :
+                        elif sum_size < ‭1048576‬ :
                             sum_size=round(sum_size/1024)
                             print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size)+ "Mb")
                         else:
