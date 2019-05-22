@@ -69,8 +69,9 @@ if __name__ == "__main__":
                         m_size = subprocess.check_output(m_size_cmd, shell=True)
                         m_size=m_size.split()
                         print(m_size)
-                        mount_size = list(map(int, m_size))
-                        sum_size = sum(mount_size)
+                        mount_size.append(m_size)
+                    mount_size = list(map(int, m_size))
+                    sum_size = sum(mount_size)
                 
                 #print(pod_name_cmd)
                 #print('pod name : ' + pod_name.replace('\n',''))
