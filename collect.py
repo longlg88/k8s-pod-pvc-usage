@@ -98,7 +98,7 @@ if __name__ == "__main__":
                     # else:
                     #     sum_size=round(1.00*sum_size/1024.00)
                     #     sum_size=round(1.00*sum_size/1024.00)
-                    sum_size = humanbytes(sum_size)
+                    sum_size = humanbytes(sum_size*1024)
                     print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size))
                 #print(pod_name_cmd)
                 #print('pod name : ' + pod_name.replace('\n',''))
