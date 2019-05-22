@@ -52,6 +52,7 @@ if __name__ == "__main__":
 
                 m_size = subprocess.check_output(mount_size_cmd, shell=True)
                 m_size = m_size.split()
+                print(m_size)
                 m_size = list(map(int, m_size))
                 m_sum_size = sum(m_size)
 
