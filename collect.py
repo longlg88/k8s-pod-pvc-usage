@@ -47,25 +47,30 @@ if __name__ == "__main__":
             pod_name = subprocess.check_output(pod_name_cmd, shell=True)
 
             if 'none' not in pod_name.replace('\n',''):
-                ## size 
-                mount_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -ks /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + "/* | awk '{print $1}'"
-
-                m_size = subprocess.check_output(mount_size_cmd, shell=True)
-                m_size = m_size.split()
-                print(m_size)
-                m_size = list(map(int, m_size))
-                m_sum_size = sum(m_size)
-
-                #m_size = m_size.split().pop(0)
+                ## calculate all size
+                ## it has a bug --> du caculate too late so tty timeout and it doesn't calculate 
+                # mount_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -c -hs /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $1}'"
+                # m_size = subprocess.check_output(mount_size_cmd, shell=True)
+                # m_size = m_size.split().pop(0)
                 #mount_size.append(m_size)
                 #print(mount_size)
 
+                file_list_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- ls -al /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $9}'"
+                file_list = subprocess.check_output(file_list_cmd, shell=True)
+                file_list = file_list.split().pop(0)
+                file_list = file_list.pop(0)
+                for _file in file_list:
+                    m_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -ks /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + "/" + _file + " | awk '{print $1}'"
+                    m_size = subprocess.check_output(m_size_cmd, shell=True)
+                    mount_size.append(m_size)
+                mount_size = list(map(int, m_size))
+                sum_size = sum(mount_size)
                 
                 #print(pod_name_cmd)
                 #print('pod name : ' + pod_name.replace('\n',''))
             
                 ## namespace / pod name / size
-                print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + m_sum_size)
+                print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + sum_size)
     stop = timeit.default_timer()
     print(stop - start)
     
