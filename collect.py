@@ -55,19 +55,24 @@ if __name__ == "__main__":
                 #mount_size.append(m_size)
                 #print(mount_size)
 
-                m_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -m /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $1}'"
-                m_size = subprocess.check_output(m_size_cmd, shell=True)
-                print(m_size)
-                m_size=m_size.split()
-                print(m_size)
-                mount_size = list(map(int, m_size))
-                sum_size = sum(mount_size)
+                ## find list
+                find_file_list_cmd = "kubectl exec -it " +get_efs_provisioner_name + " -n kube-system -- ls -al /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $9}'"
+                find_file_list = subprocess.check_output(find_file_list_cmd, shell=True)
+                find_file_list = find_file_list.split()
+
+                # m_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -m /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $1}'"
+                # m_size = subprocess.check_output(m_size_cmd, shell=True)
+                # print(m_size)
+                # m_size=m_size.split()
+                # print(m_size)
+                # mount_size = list(map(int, m_size))
+                # sum_size = sum(mount_size)
                 
                 #print(pod_name_cmd)
                 #print('pod name : ' + pod_name.replace('\n',''))
             
                 ## namespace / pod name / size
-                print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size))
+                #print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size))
     stop = timeit.default_timer()
     print(stop - start)
     
