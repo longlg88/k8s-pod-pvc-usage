@@ -55,15 +55,10 @@ if __name__ == "__main__":
                 #mount_size.append(m_size)
                 #print(mount_size)
 
-                file_list_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- ls -al /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $9}'"
-                file_list = subprocess.check_output(file_list_cmd, shell=True)
-                file_list = file_list.split()
-                print(file_list)
-                file_list = file_list.pop(0)
-                for _file in file_list:
-                    m_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -ks /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + "/" + _file + " | awk '{print $1}'"
-                    m_size = subprocess.check_output(m_size_cmd, shell=True)
-                    mount_size.append(m_size)
+                m_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -k /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $1}'"
+                m_size = subprocess.check_output(m_size_cmd, shell=True)
+                m_size=m_size.split()
+                print(m_size)
                 mount_size = list(map(int, m_size))
                 sum_size = sum(mount_size)
                 
