@@ -48,9 +48,13 @@ if __name__ == "__main__":
 
             if 'none' not in pod_name.replace('\n',''):
                 ## size 
-                mount_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -c -hs /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $1}'"
+                mount_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -ks /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + "/* | awk '{print $1}'"
+
                 m_size = subprocess.check_output(mount_size_cmd, shell=True)
-                m_size = m_size.split().pop(0)
+                m_size = m_size.split()
+                m_sum_size = sum(m_size)
+
+                #m_size = m_size.split().pop(0)
                 #mount_size.append(m_size)
                 #print(mount_size)
 
@@ -59,7 +63,7 @@ if __name__ == "__main__":
                 #print('pod name : ' + pod_name.replace('\n',''))
             
                 ## namespace / pod name / size
-                print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + m_size)
+                print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + m_sum_size)
     stop = timeit.default_timer()
     print(stop - start)
     
