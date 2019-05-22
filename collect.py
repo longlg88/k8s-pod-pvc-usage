@@ -4,6 +4,23 @@ import sys
 import subprocess
 import timeit
 
+def humanbytes(B):
+   'Return the given bytes as a human friendly KB, MB, GB, or TB string'
+   B = float(B)
+   KB = float(1024)
+   MB = float(KB ** 2) # 1,048,576
+   GB = float(KB ** 3) # 1,073,741,824
+   TB = float(KB ** 4) # 1,099,511,627,776
+
+   if B < KB:
+      return '{0} {1}'.format(B,'Bytes' if 0 == B > 1 else 'Byte')
+   elif KB <= B < MB:
+      return '{0:.2f} KB'.format(B/KB)
+   elif MB <= B < GB:
+      return '{0:.2f} MB'.format(B/MB)
+   elif GB <= B < TB:
+      return '{0:.2f} GB'.format(B/GB)
+
 if __name__ == "__main__":
     ##### Count filesystem size for du / df 
     ##### It failed because prometheus server can't use '/bin/bash' or '/bin/sh', so it du / df command didn't work.
@@ -73,15 +90,16 @@ if __name__ == "__main__":
                         mount_size.append(''.join(m_size))
                     mount_size = list(map(int, mount_size))
                     sum_size = sum(mount_size)
-                    if sum_size < 1024:
-                        print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size)+ "Kb")
-                    elif sum_size < 1048576:
-                        sum_size=round(1.00*sum_size/1024.00)
-                        print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size)+ "Mb")
-                    else:
-                        sum_size=round(1.00*sum_size/1024.00)
-                        sum_size=round(1.00*sum_size/1024.00)
-                        print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size)+"Gb")
+                    # if sum_size < 1024:
+                    #     print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size)+ "Kb")
+                    # elif sum_size < 1048576:
+                    #     sum_size=round(1.00*sum_size/1024.00)
+                    #     print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size)+ "Mb")
+                    # else:
+                    #     sum_size=round(1.00*sum_size/1024.00)
+                    #     sum_size=round(1.00*sum_size/1024.00)
+                    sum_size = humanbytes(sum_size)
+                    print(get_namespaces[val] + " " + pod_name.replace('\n','') + " " + str(sum_size))
                 #print(pod_name_cmd)
                 #print('pod name : ' + pod_name.replace('\n',''))
             
