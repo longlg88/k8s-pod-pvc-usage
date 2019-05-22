@@ -57,6 +57,7 @@ if __name__ == "__main__":
 
                 m_size_cmd = "kubectl exec -it " + get_efs_provisioner_name + " -n kube-system -- du -k /persistentvolumes/" + get_pvc_names[val] + "-" + get_pvc_ids[val] + " | awk '{print $1}'"
                 m_size = subprocess.check_output(m_size_cmd, shell=True)
+                print(m_size)
                 m_size=m_size.split()
                 print(m_size)
                 mount_size = list(map(int, m_size))
